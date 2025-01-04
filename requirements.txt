@@ -3,8 +3,7 @@ fastapi==0.115.6
 mxnet==1.9.1
 gluonnlp==0.10.0
 tqdm==4.67.1
-numpy==1.23.1
 transformers >= 4.8.1, <=4.8.1
-sentencepiece >= 0.1.6, <=0.1.96
+numpy==1.23.1
 torch
 git+https://github.com/SKTBrain/KoBERT.git#egg=kobert_tokenizer&subdirectory=kobert_hf
