@@ -1,2 +1,2 @@
-/controller/model_state_dict.pt filter=lfs diff=lfs merge=lfs -text
+controller/model_state_dict.pt filter=lfs diff=lfs merge=lfs -text
 *.pt filter=lfs diff=lfs merge=lfs -text
