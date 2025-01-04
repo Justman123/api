@@ -2,7 +2,6 @@ uvicorn==0.34.0
 fastapi==0.115.6
 mxnet==1.9.1
 gluonnlp==0.10.0
-pandas==2.2.2
 tqdm==4.67.1
 numpy==1.23.1
 git+https://github.com/SKTBrain/KoBERT.git#egg=kobert_tokenizer&subdirectory=kobert_hf
