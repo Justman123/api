@@ -8,7 +8,6 @@ import numpy as np
 np.bool = np.bool_
 import gluonnlp as nlp
 from tqdm import tqdm, tqdm_notebook
-import pandas as pd
 from tqdm.notebook import tqdm
 from transformers import AdamW
 from transformers.optimization import get_cosine_schedule_with_warmup
