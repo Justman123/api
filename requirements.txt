@@ -11,4 +11,5 @@ h11
 starlette
 pydantic
 pydantic_core
+annotated_types
 git+https://github.com/SKTBrain/KoBERT.git#egg=kobert_tokenizer&subdirectory=kobert_hf
