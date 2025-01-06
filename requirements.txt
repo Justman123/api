@@ -18,4 +18,5 @@ sniffio
 exceptiongroup
 requests
 urllib3
+idna
 git+https://github.com/SKTBrain/KoBERT.git#egg=kobert_tokenizer&subdirectory=kobert_hf
