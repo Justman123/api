@@ -19,4 +19,5 @@ exceptiongroup
 requests
 urllib3
 idna
+certifi
 git+https://github.com/SKTBrain/KoBERT.git#egg=kobert_tokenizer&subdirectory=kobert_hf
