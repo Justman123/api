@@ -16,4 +16,5 @@ annotated_types
 anyio
 sniffio
 exceptiongroup
+requests
 git+https://github.com/SKTBrain/KoBERT.git#egg=kobert_tokenizer&subdirectory=kobert_hf
