@@ -6,6 +6,7 @@ tqdm==4.67.1
 transformers >= 4.8.1, <=4.8.1
 numpy==1.23.1
 torch==2.1.1+cpu
+-f https://download.pytorch.org/whl/cpu
 click
 typing-extensions
 h11
