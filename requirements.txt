@@ -28,4 +28,6 @@ sacremoses
 filelock
 huggingface_hub
 pyyaml
+chardet
+charset-normalizer
 git+https://github.com/SKTBrain/KoBERT.git#egg=kobert_tokenizer&subdirectory=kobert_hf
