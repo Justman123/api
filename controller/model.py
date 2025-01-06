@@ -119,4 +119,4 @@ router = APIRouter(
 
 @router.get("")
 def sentiment_analysis(query: str):
-    return {"query" : query}
+    return {"query" : predict(query)}
