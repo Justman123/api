@@ -22,4 +22,5 @@ idna
 certifi
 regex!=2019
 sacremoses
+filelock
 git+https://github.com/SKTBrain/KoBERT.git#egg=kobert_tokenizer&subdirectory=kobert_hf
