@@ -10,4 +10,5 @@ typing-extensions
 h11
 starlette
 pydantic
+pydantic_core
 git+https://github.com/SKTBrain/KoBERT.git#egg=kobert_tokenizer&subdirectory=kobert_hf
