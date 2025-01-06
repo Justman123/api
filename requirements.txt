@@ -4,6 +4,7 @@ mxnet==1.9.1
 gluonnlp==0.10.0
 tqdm==4.67.1
 transformers >= 4.8.1, <=4.8.1
+sentencepiece >= 0.1.6, <=0.1.96
 numpy==1.23.1
 https://download.pytorch.org/whl/cpu-cxx11-abi/torch-2.2.1%2Bcpu.cxx11.abi-cp310-cp310-linux_x86_64.whl#sha256=d7a65ab7b21b8b49e7eba8b42e0bf70c97a6b9d28a62a4d3248718ba9b04d7f8
 click
