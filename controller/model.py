@@ -19,7 +19,7 @@ bertmodel = BertModel.from_pretrained('skt/kobert-base-v1', return_dict=False)
 vocab = nlp.vocab.BERTVocab.from_sentencepiece(tokenizer.vocab_file, padding_token='[PAD]')
 tok = tokenizer.tokenize
 
-device = torch.device("cuda:0")
+device = torch.device("cpu")
 max_len = 64 # max seqence length
 batch_size = 64
 warmup_ratio = 0.1
