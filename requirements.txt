@@ -21,4 +21,5 @@ urllib3
 idna
 certifi
 regex!=2019
+sacremoses
 git+https://github.com/SKTBrain/KoBERT.git#egg=kobert_tokenizer&subdirectory=kobert_hf
