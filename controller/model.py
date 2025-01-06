@@ -1,80 +1,89 @@
 from fastapi import APIRouter
-import torch
-from torch import nn
-import torch.nn.functional as F
-import torch.optim as optim
-from torch.utils.data import Dataset, DataLoader
-import numpy as np
-np.bool = np.bool_
-import gluonnlp as nlp
-from tqdm import tqdm, tqdm_notebook
-import pandas as pd
-from tqdm.notebook import tqdm
-from transformers import AdamW
-from transformers.optimization import get_cosine_schedule_with_warmup
-from transformers import BertModel
-from kobert_tokenizer import KoBERTTokenizer
+router = APIRouter(
+    prefix="/model",
+    tags=["items"],
+    responses={404: {"description": "Not Found"}},
+)
 
-tokenizer = KoBERTTokenizer.from_pretrained('skt/kobert-base-v1')
-bertmodel = BertModel.from_pretrained('skt/kobert-base-v1', return_dict=False)
-vocab = nlp.vocab.BERTVocab.from_sentencepiece(tokenizer.vocab_file, padding_token='[PAD]')
-tok = tokenizer.tokenize
+@router.get("")
+def sentiment_analysis(query: str):
+    return {"query" : query}
 
-device = torch.device("cuda:0")
-max_len = 64 # max seqence length
-batch_size = 64
-warmup_ratio = 0.1
-num_epochs = 3
-max_grad_norm = 1
-log_interval = 200
-learning_rate =  5e-5
+# import torch
+# from torch import nn
+# import torch.nn.functional as F
+# import torch.optim as optim
+# from torch.utils.data import Dataset, DataLoader
+# import numpy as np
+# np.bool = np.bool_
+# import gluonnlp as nlp
+# from tqdm import tqdm, tqdm_notebook
+# from tqdm.notebook import tqdm
+# from transformers import AdamW
+# from transformers.optimization import get_cosine_schedule_with_warmup
+# from transformers import BertModel
+# from kobert_tokenizer import KoBERTTokenizer
 
-class BERTDataset(Dataset):
-    def __init__(self, dataset, sent_idx, label_idx, bert_tokenizer, vocab, max_len,
-                 pad, pair):
-        transform = nlp.data.BERTSentenceTransform(
-            bert_tokenizer, max_seq_length=max_len, vocab=vocab, pad=pad, pair=pair)
+# tokenizer = KoBERTTokenizer.from_pretrained('skt/kobert-base-v1')
+# bertmodel = BertModel.from_pretrained('skt/kobert-base-v1', return_dict=False)
+# vocab = nlp.vocab.BERTVocab.from_sentencepiece(tokenizer.vocab_file, padding_token='[PAD]')
+# tok = tokenizer.tokenize
 
-        self.sentences = [transform([i[sent_idx]]) for i in dataset] # 문장 변환
-        self.labels = [np.int32(i[label_idx]) for i in dataset] # label 변환
+# device = torch.device("cuda:0")
+# max_len = 64 # max seqence length
+# batch_size = 64
+# warmup_ratio = 0.1
+# num_epochs = 3
+# max_grad_norm = 1
+# log_interval = 200
+# learning_rate =  5e-5
 
-    def __getitem__(self, i):
-        return (self.sentences[i] + (self.labels[i], ))
+# class BERTDataset(Dataset):
+#     def __init__(self, dataset, sent_idx, label_idx, bert_tokenizer, vocab, max_len,
+#                  pad, pair):
+#         transform = nlp.data.BERTSentenceTransform(
+#             bert_tokenizer, max_seq_length=max_len, vocab=vocab, pad=pad, pair=pair)
 
-    def __len__(self): # 전체 데이터셋의 길이 반환
-        return (len(self.labels))
+#         self.sentences = [transform([i[sent_idx]]) for i in dataset] # 문장 변환
+#         self.labels = [np.int32(i[label_idx]) for i in dataset] # label 변환
 
-class BERTClassifier(nn.Module):
-  def __init__(self, bert, hidden_size=768, num_classes=5, dr_rate=None, params=None):
-    super(BERTClassifier, self).__init__()
-    self.bert = bert
-    self.dr_rate = dr_rate
+#     def __getitem__(self, i):
+#         return (self.sentences[i] + (self.labels[i], ))
 
-    self.classifier = nn.Linear(hidden_size , num_classes)
-    if dr_rate:
-      self.dropout = nn.Dropout(p=dr_rate)
+#     def __len__(self): # 전체 데이터셋의 길이 반환
+#         return (len(self.labels))
 
-  def gen_attention_mask(self, token_ids, valid_length):
-    attention_mask = torch.zeros_like(token_ids)
-    for i, v in enumerate(valid_length):
-      attention_mask[i][:v] = 1
-    return attention_mask.float()
+# class BERTClassifier(nn.Module):
+#   def __init__(self, bert, hidden_size=768, num_classes=5, dr_rate=None, params=None):
+#     super(BERTClassifier, self).__init__()
+#     self.bert = bert
+#     self.dr_rate = dr_rate
 
-  def forward(self, token_ids, valid_length, segment_ids):
-    attention_mask = self.gen_attention_mask(token_ids, valid_length)
-    _, pooler = self.bert(input_ids = token_ids, token_type_ids = segment_ids.long(), attention_mask = attention_mask.float().to(token_ids.device))
-    if self.dr_rate:
-        out = self.dropout(pooler)
-    else:
-        out = pooler
-    return self.classifier(out)
+#     self.classifier = nn.Linear(hidden_size , num_classes)
+#     if dr_rate:
+#       self.dropout = nn.Dropout(p=dr_rate)
 
-model = BERTClassifier(bertmodel, dr_rate=0.5).to(device)
+#   def gen_attention_mask(self, token_ids, valid_length):
+#     attention_mask = torch.zeros_like(token_ids)
+#     for i, v in enumerate(valid_length):
+#       attention_mask[i][:v] = 1
+#     return attention_mask.float()
 
-loaded_model = BERTClassifier(bertmodel, dr_rate=0.5).to(device)
-loaded_model.load_state_dict(torch.load("controller\model_state_dict.pt"))
+#   def forward(self, token_ids, valid_length, segment_ids):
+#     attention_mask = self.gen_attention_mask(token_ids, valid_length)
+#     _, pooler = self.bert(input_ids = token_ids, token_type_ids = segment_ids.long(), attention_mask = attention_mask.float().to(token_ids.device))
+#     if self.dr_rate:
+#         out = self.dropout(pooler)
+#     else:
+#         out = pooler
+#     return self.classifier(out)
 
-def predict(predict_sentence): # input = 감정분류하고자 하는 sentence
+# model = BERTClassifier(bertmodel, dr_rate=0.5).to(device)
+
+# loaded_model = BERTClassifier(bertmodel, dr_rate=0.5).to(device)
+# loaded_model.load_state_dict(torch.load("\controller\model_state_dict.pt"))
+
+# def predict(predict_sentence): # input = 감정분류하고자 하는 sentence
 
     data = [predict_sentence, '0']
     dataset_another = [data]
@@ -112,12 +121,4 @@ def predict(predict_sentence): # input = 감정분류하고자 하는 sentence
         return (test_eval[0])
 
 
-router = APIRouter(
-    prefix="/model",
-    tags=["items"],
-    responses={404: {"description": "Not Found"}},
-)
 
-@router.get("")
-def sentiment_analysis(query: str):
-    return {"query" : predict(query)}
