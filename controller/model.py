@@ -14,10 +14,12 @@ from transformers.optimization import get_cosine_schedule_with_warmup
 from transformers import BertModel
 from kobert_tokenizer import KoBERTTokenizer
 
+print("토크나이저 로딩 시작")
 tokenizer = KoBERTTokenizer.from_pretrained('skt/kobert-base-v1')
 bertmodel = BertModel.from_pretrained('skt/kobert-base-v1', return_dict=False)
 vocab = nlp.vocab.BERTVocab.from_sentencepiece(tokenizer.vocab_file, padding_token='[PAD]')
 tok = tokenizer.tokenize
+print("토크나이저 로딩 완료")
 
 device = torch.device("cpu")
 max_len = 64 # max seqence length
