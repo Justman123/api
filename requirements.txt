@@ -13,4 +13,5 @@ pydantic
 pydantic_core
 annotated_types
 anyio
+sniffio
 git+https://github.com/SKTBrain/KoBERT.git#egg=kobert_tokenizer&subdirectory=kobert_hf
