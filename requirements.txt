@@ -8,4 +8,5 @@ numpy==1.23.1
 click
 typing-extensions
 h11
+starlette
 git+https://github.com/SKTBrain/KoBERT.git#egg=kobert_tokenizer&subdirectory=kobert_hf
