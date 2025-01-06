@@ -18,7 +18,7 @@ print("토크나이저 로딩 시작")
 tokenizer = KoBERTTokenizer.from_pretrained('skt/kobert-base-v1')
 print("토크나이저 로딩 완료")
 print("모델 로딩 시작")
-bertmodel = BertModel.from_pretrained('skt/kobert-base-v1', return_dict=False)
+bertmodel = BertModel
 print("모델 로딩 완료")
 vocab = nlp.vocab.BERTVocab.from_sentencepiece(tokenizer.vocab_file, padding_token='[PAD]')
 tok = tokenizer.tokenize
