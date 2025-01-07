@@ -12,6 +12,7 @@ numpy==1.23.1
 torch
 h11
 pydantic_core
+pydantic
 annotated_types
 anyio
 sniffio
