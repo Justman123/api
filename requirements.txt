@@ -9,7 +9,7 @@ sentencepiece >= 0.1.6, <=0.1.96
 boto3 <=1.15.18
 onnxruntime
 numpy==1.23.1
-https://download.pytorch.org/whl/cpu-cxx11-abi/torch-2.3.0%2Bcpu.cxx11.abi-cp310-cp310-linux_x86_64.whl#sha256=896e8a82f441ff8ae5c8acd2fddd48d9ae1f2738fb8c083b912debbbe09c553bpydantic
+pytorch
 pydantic_core
 annotated_types
 anyio
