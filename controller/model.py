@@ -21,16 +21,6 @@ import json
 print("토크나이저 로딩 시작")
 tokenizer = KoBERTTokenizer.from_pretrained('skt/kobert-base-v1')
 print("토크나이저 로딩 완료")
-
-print("모델 로딩 시작")
-# config.json 파일 로드
-with open('config.json', 'r') as f:
-    config = BertConfig.from_dict(json.load(f))
-bertmodel = BertModel(config)
-model_weights = load_file('model.safetensors')
-bertmodel.load_state_dict(model_weights)
-print("모델 로딩 완료")
-
 vocab = nlp.vocab.BERTVocab.from_sentencepiece(tokenizer.vocab_file, padding_token='[PAD]')
 tok = tokenizer.tokenize
 device = torch.device("cpu")
@@ -57,36 +47,7 @@ class BERTDataset(Dataset):
     def __len__(self): # 전체 데이터셋의 길이 반환
         return (len(self.labels))
 
-class BERTClassifier(nn.Module):
-  def __init__(self, bert, hidden_size=768, num_classes=5, dr_rate=None, params=None):
-    super(BERTClassifier, self).__init__()
-    self.bert = bert
-    self.dr_rate = dr_rate
-
-    self.classifier = nn.Linear(hidden_size , num_classes)
-    if dr_rate:
-      self.dropout = nn.Dropout(p=dr_rate)
-
-  def gen_attention_mask(self, token_ids, valid_length):
-    attention_mask = torch.zeros_like(token_ids)
-    for i, v in enumerate(valid_length):
-      attention_mask[i][:v] = 1
-    return attention_mask.float()
-
-  def forward(self, token_ids, valid_length, segment_ids):
-    attention_mask = self.gen_attention_mask(token_ids, valid_length)
-    _, pooler = self.bert(input_ids = token_ids, token_type_ids = segment_ids.long(), attention_mask = attention_mask.float().to(token_ids.device))
-    if self.dr_rate:
-        out = self.dropout(pooler)
-    else:
-        out = pooler
-    return self.classifier(out)
-
-
-loaded_model = BERTClassifier(bertmodel, dr_rate=0.5).to(device)
-state_dict = torch.load("model_state_dict.pt", weights_only=True)
-loaded_model.load_state_dict(state_dict)
-
+loaded_model = torch.load("model.pth")
 
 def predict(predict_sentence): # input = 감정분류하고자 하는 sentence
 
@@ -109,7 +70,7 @@ def predict(predict_sentence): # input = 감정분류하고자 하는 sentence
 
 
         test_eval = []
-        for i in out: # out = model(token_ids, valid_length, segment_ids)
+        for i in out:
             logits = i
             logits = logits.detach().cpu().numpy()
 
@@ -132,6 +93,6 @@ router = APIRouter(
     responses={404: {"description": "Not Found"}},
 )
 
-@router.get("")
+@router.get("/model")
 def sentiment_analysis(query: str):
     return {"query" : predict(query)}
