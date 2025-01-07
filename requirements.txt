@@ -10,6 +10,7 @@ boto3 <=1.15.18
 onnxruntime
 numpy==1.23.1
 torch
+h11
 pydantic_core
 annotated_types
 anyio
