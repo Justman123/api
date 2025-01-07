@@ -29,8 +29,7 @@ huggingface_hub
 pyyaml
 chardet
 charset-normalizer
-gdown
 beautifulsoup4
 soupsieve
-safetensors
+click
 git+https://github.com/SKTBrain/KoBERT.git#egg=kobert_tokenizer&subdirectory=kobert_hf
