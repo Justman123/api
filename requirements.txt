@@ -9,7 +9,8 @@ sentencepiece >= 0.1.6, <=0.1.96
 boto3 <=1.15.18
 onnxruntime
 numpy==1.23.1
-https://download.pytorch.org/whl/cu118/torch-2.5.1%2Bcu118-cp310-cp310-linux_x86_64.whl#sha256=eee38239682a01ab02d3790fe194753f7070f07e1741e67fb5c3c3059d3b97b2h11
+https://download.pytorch.org/whl/cu118/torch-2.5.1%2Bcu118-cp310-cp310-linux_x86_64.whl#sha256=eee38239682a01ab02d3790fe194753f7070f07e1741e67fb5c3c3059d3b97b2
+h11
 starlette
 pydantic
 pydantic_core
