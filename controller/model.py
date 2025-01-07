@@ -23,9 +23,9 @@ tokenizer = KoBERTTokenizer.from_pretrained('skt/kobert-base-v1')
 print("토크나이저 로딩 완료")
 
 print("모델 로딩 시작")
-config = AutoConfig.from_pretrained('/content/drive/MyDrive/datasets/kobert-base-v1/config.json', from_tf=False)
+config = AutoConfig.from_pretrained('config.json', from_tf=False)
 bertmodel = BertModel(config)
-model_weights = load_file('/content/drive/MyDrive/datasets/kobert-base-v1/model.safetensors')
+model_weights = load_file('model.safetensors')
 bertmodel.load_state_dict(model_weights)
 print("모델 로딩 완료")
 
