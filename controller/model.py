@@ -11,7 +11,7 @@ from tqdm import tqdm, tqdm_notebook
 from tqdm.notebook import tqdm
 from transformers import AdamW
 from transformers.optimization import get_cosine_schedule_with_warmup
-from transformers import BertModel
+from transformers import BertModel,BertConfig
 from kobert_tokenizer import KoBERTTokenizer
 import gdown
 from transformers import AutoModel, AutoConfig
