@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+AutoConfigfrom fastapi import APIRouter
 import torch
 from torch import nn
 import torch.nn.functional as F
@@ -14,7 +14,7 @@ from transformers.optimization import get_cosine_schedule_with_warmup
 from transformers import BertModel
 from kobert_tokenizer import KoBERTTokenizer
 import gdown
-from transformers import AutoModel
+from transformers import AutoModel, AutoConfig
 from safetensors.torch import load_file  # safetensors 파일 로딩을 위한 safetensors 라이브러리
 
 
