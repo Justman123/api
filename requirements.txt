@@ -33,4 +33,5 @@ charset-normalizer
 gdown
 beautifulsoup4
 soupsieve
+safetensors
 git+https://github.com/SKTBrain/KoBERT.git#egg=kobert_tokenizer&subdirectory=kobert_hf
