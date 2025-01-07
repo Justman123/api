@@ -1,8 +1,5 @@
 from fastapi import APIRouter
 import torch
-from torch import nn
-import torch.nn.functional as F
-import torch.optim as optim
 from torch.utils.data import Dataset, DataLoader
 import numpy as np
 np.bool = np.bool_
