@@ -17,6 +17,32 @@ import gdown
 from transformers import AutoModel, AutoConfig
 from safetensors.torch import load_file  # safetensors 파일 로딩을 위한 safetensors 라이브러리
 import json
+import requests
+
+def download_file_from_google_drive(file_id, destination):
+    URL = f'https://drive.google.com/uc?id={file_id}'
+    session = requests.Session()
+    response = session.get(URL, params={'id': file_id}, stream=True)
+    
+    # 리다이렉션을 따르기 위해 'Content-Disposition' 헤더를 체크
+    for key, value in response.cookies.items():
+        if key.startswith('download_warning'):
+            params = {'confirm': value}
+            response = session.get(URL, params=params, stream=True)
+            break
+
+    # 파일 저장
+    with open(destination, "wb") as f:
+        for chunk in response.iter_content(chunk_size=128):
+            f.write(chunk)
+
+    print(f'File saved as {destination}')
+
+# Google Drive 파일 ID와 저장할 파일명을 지정
+file_id = '1UF5QZevpu4EgyJyzWzzmqsM9lXT0qtOr'
+destination = 'model.pth'  # 원하는 파일 이름 및 확장자로 지정
+
+download_file_from_google_drive(file_id, destination)
 
 print("토크나이저 로딩 시작")
 tokenizer = KoBERTTokenizer.from_pretrained('skt/kobert-base-v1')
