@@ -9,7 +9,7 @@ sentencepiece >= 0.1.6, <=0.1.96
 boto3 <=1.15.18
 onnxruntime
 numpy==1.23.1
-pytorch
+torch
 pydantic_core
 annotated_types
 anyio
