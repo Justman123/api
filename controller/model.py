@@ -79,10 +79,9 @@ class BERTClassifier(nn.Module):
 
 model = BERTClassifier(bertmodel, dr_rate=0.5).to(device)
 
-# loaded_model = BERTClassifier(bertmodel, dr_rate=0.5).to(device)
-# state_dict = torch.load("model_state_dict.pt", map_location=device)
-# loaded_model.load_state_dict(state_dict)
-loaded_model = torch.load("model_state_dict.pt")
+loaded_model = BERTClassifier(bertmodel, dr_rate=0.5).to(device)
+state_dict = torch.load("model_state_dict.pt", map_location=device)
+loaded_model.load_state_dict(state_dict)
 def predict(predict_sentence): # input = 감정분류하고자 하는 sentence
 
     data = [predict_sentence, '0']
