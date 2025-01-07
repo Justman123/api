@@ -26,7 +26,7 @@ tok = tokenizer.tokenize
 print("pt 파일 로딩 시작")
 url = "https://drive.google.com/uc?id=1kb0uvtDhYobmBJIHqmHCaRBBWGnwouas"
 output = "model_state_dict.pt"
-gdown.download(url, output, quiet=False)
+gdown.download(url, output, quiet=False, use_cookies=False)
 print("pt 파일 로딩 완료")
 device = torch.device("cpu")
 max_len = 64 # max seqence length
