@@ -14,20 +14,23 @@ from transformers.optimization import get_cosine_schedule_with_warmup
 from transformers import BertModel
 from kobert_tokenizer import KoBERTTokenizer
 import gdown
+from transformers import AutoModel
+from safetensors.torch import load_file  # safetensors 파일 로딩을 위한 safetensors 라이브러리
+
 
 print("토크나이저 로딩 시작")
 tokenizer = KoBERTTokenizer.from_pretrained('skt/kobert-base-v1')
 print("토크나이저 로딩 완료")
+
 print("모델 로딩 시작")
-bertmodel = BertModel.from_pretrained('skt/kobert-base-v1', return_dict=False)
+config = AutoConfig.from_pretrained('/content/drive/MyDrive/datasets/kobert-base-v1/config.json', from_tf=False)
+bertmodel = BertModel(config)
+model_weights = load_file('/content/drive/MyDrive/datasets/kobert-base-v1/model.safetensors')
+bertmodel.load_state_dict(model_weights)
 print("모델 로딩 완료")
+
 vocab = nlp.vocab.BERTVocab.from_sentencepiece(tokenizer.vocab_file, padding_token='[PAD]')
 tok = tokenizer.tokenize
-print("pt 파일 로딩 시작")
-# url = "https://drive.google.com/uc?id=1kb0uvtDhYobmBJIHqmHCaRBBWGnwouas"
-# output = "model_state_dict.pt"
-# gdown.download(url, output, quiet=False, use_cookies=False)
-print("pt 파일 로딩 완료")
 device = torch.device("cpu")
 max_len = 64 # max seqence length
 batch_size = 64
@@ -77,11 +80,12 @@ class BERTClassifier(nn.Module):
         out = pooler
     return self.classifier(out)
 
-model = BERTClassifier(bertmodel, dr_rate=0.5).to(device)
 
 loaded_model = BERTClassifier(bertmodel, dr_rate=0.5).to(device)
-state_dict = torch.load("model_state_dict.pt", map_location=device)
+state_dict = torch.load("model_state_dict.pt", weights_only=True)
 loaded_model.load_state_dict(state_dict)
+
+
 def predict(predict_sentence): # input = 감정분류하고자 하는 sentence
 
     data = [predict_sentence, '0']
