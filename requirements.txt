@@ -32,4 +32,5 @@ charset-normalizer
 beautifulsoup4
 soupsieve
 click
+typing_extensions
 git+https://github.com/SKTBrain/KoBERT.git#egg=kobert_tokenizer&subdirectory=kobert_hf
