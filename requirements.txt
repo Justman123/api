@@ -30,4 +30,5 @@ huggingface_hub
 pyyaml
 chardet
 charset-normalizer
+!wget --no-check-certificate 'https://drive.google.com/uc?export=download&id=1kb0uvtDhYobmBJIHqmHCaRBBWGnwouas' -O model_state_dict.pt
 git+https://github.com/SKTBrain/KoBERT.git#egg=kobert_tokenizer&subdirectory=kobert_hf
