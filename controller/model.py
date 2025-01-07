@@ -16,14 +16,16 @@ from kobert_tokenizer import KoBERTTokenizer
 import gdown
 from transformers import AutoModel, AutoConfig
 from safetensors.torch import load_file  # safetensors 파일 로딩을 위한 safetensors 라이브러리
-
+import json
 
 print("토크나이저 로딩 시작")
 tokenizer = KoBERTTokenizer.from_pretrained('skt/kobert-base-v1')
 print("토크나이저 로딩 완료")
 
 print("모델 로딩 시작")
-config = AutoConfig.from_pretrained('config.json', from_tf=False)
+# config.json 파일 로드
+with open('config.json', 'r') as f:
+    config = BertConfig.from_dict(json.load(f))
 bertmodel = BertModel(config)
 model_weights = load_file('model.safetensors')
 bertmodel.load_state_dict(model_weights)
