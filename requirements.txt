@@ -31,4 +31,5 @@ pyyaml
 chardet
 charset-normalizer
 gdown
+bs4
 git+https://github.com/SKTBrain/KoBERT.git#egg=kobert_tokenizer&subdirectory=kobert_hf
