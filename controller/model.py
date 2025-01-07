@@ -24,9 +24,9 @@ print("모델 로딩 완료")
 vocab = nlp.vocab.BERTVocab.from_sentencepiece(tokenizer.vocab_file, padding_token='[PAD]')
 tok = tokenizer.tokenize
 print("pt 파일 로딩 시작")
-url = "https://drive.google.com/uc?id=1kb0uvtDhYobmBJIHqmHCaRBBWGnwouas"
-output = "model_state_dict.pt"
-gdown.download(url, output, quiet=False, use_cookies=False)
+# url = "https://drive.google.com/uc?id=1kb0uvtDhYobmBJIHqmHCaRBBWGnwouas"
+# output = "model_state_dict.pt"
+# gdown.download(url, output, quiet=False, use_cookies=False)
 print("pt 파일 로딩 완료")
 device = torch.device("cpu")
 max_len = 64 # max seqence length
