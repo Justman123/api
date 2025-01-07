@@ -31,4 +31,5 @@ beautifulsoup4
 soupsieve
 click
 typing_extensions
+starlette
 git+https://github.com/SKTBrain/KoBERT.git#egg=kobert_tokenizer&subdirectory=kobert_hf
